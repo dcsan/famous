@@ -3023,6 +3023,7 @@ define('famous/core/Engine',['require','exports','module','./Context','./EventHa
      * @return {Context} new Context within el
      */
     Engine.createContext = function createContext(el) {
+        console.log("createContext from dist")
         var needMountContainer = false;
         if (!el) {
             el = document.createElement(options.containerType);

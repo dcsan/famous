@@ -280,6 +280,7 @@ define(function(require, exports, module) {
      * @return {Context} new Context within el
      */
     Engine.createContext = function createContext(el) {
+        console.log("Engine.createContext: ", el, options)
         if (!initialized && options.appMode) initialize();
 
         var needMountContainer = false;

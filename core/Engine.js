@@ -130,7 +130,7 @@ define(function(require, exports, module) {
         // prevent scrolling via browser
         window.addEventListener('touchmove', function(event) {
             console.log('touchmove OK')
-            // event.preventDefault();
+            event.preventDefault();
         }, true);
     }
     var initialized = false;
@@ -282,7 +282,8 @@ define(function(require, exports, module) {
      * @return {Context} new Context within el
      */
     Engine.createContext = function createContext(el) {
-        console.log("Engine.createContext: ", el, options)
+        console.log("Engine.createContext: ", el)
+        console.log("Engine.options: ", options)
         if (!initialized && options.appMode) initialize();
 
         var needMountContainer = false;

@@ -2872,7 +2872,8 @@ define('famous/core/Engine',['require','exports','module','./Context','./EventHa
 
     // prevent scrolling via browser
     window.addEventListener('touchmove', function(event) {
-        event.preventDefault();
+        console.log("touchMove")
+        // event.preventDefault();
     }, true);
 
     /**

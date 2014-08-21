@@ -127,10 +127,11 @@ define(function(require, exports, module) {
     function initialize() {
         // prevent scrolling via browser
         window.addEventListener('touchmove', function(event) {
-            event.preventDefault();
+            console.log('touchmove OK')
+            // event.preventDefault();
         }, true);
-        document.body.classList.add('famous-root');
-        document.documentElement.classList.add('famous-root');
+        // document.body.classList.add('famous-root');
+        // document.documentElement.classList.add('famous-root');
     }
     var initialized = false;
 

@@ -123,12 +123,8 @@ define(function(require, exports, module) {
         this._totalShift = 0;
         this._cachedIndex = 0;
 
-// <<<<<<< HEAD
         // subcomponent logic
         this._scroller.positionFrom(this.getPosition.bind(this));
-// =======
-        this.sync = new GenericSync(['scroll', 'touch'], {direction : this.options.direction, preventDefault: this.options.preventDefault});
-// >>>>>>> dacca64e26f26ff26c0cb7c2a66734d9b7588147
 
         // eventing
         this._eventInput = new EventHandler();
@@ -572,7 +568,6 @@ define(function(require, exports, module) {
 
         // propagate options to sub-components
 
-// <<<<<<< HEAD
         // scroller sub-component
         this._scroller.setOptions(options);
         if (options.groupScroll)
@@ -588,31 +583,6 @@ define(function(require, exports, module) {
                 period: options.edgePeriod,
                 dampingRatio: options.edgeDamp
             });
-// =======
-        this.sync.setOptions({
-            rails: this.options.rails,
-            direction: (this.options.direction === Utility.Direction.X) ? GenericSync.DIRECTION_X : GenericSync.DIRECTION_Y,
-            preventDefault: this.options.preventDefault
-        });
-    };
-
-    /**
-     * goToPreviousPage paginates your Scrollview instance backwards by one item.
-     * @method goToPreviousPage
-     * @return {ViewSequence} The previous node.
-     */
-    Scrollview.prototype.goToPreviousPage = function goToPreviousPage() {
-        if (!this._node) return null;
-        var previousNode = this._node.getPrevious();
-        if (previousNode) {
-            var currentPosition = this.getPosition();
-            var previousNodeSize = _nodeSizeForDirection.call(this, previousNode);
-            this._scroller.sequenceFrom(previousNode);
-            this._node = previousNode;
-            var previousSpringPosition = (currentPosition < TOLERANCE) ? -previousNodeSize : 0;
-            _setSpring.call(this, previousSpringPosition, SpringStates.PAGE);
-            _shiftOrigin.call(this, previousNodeSize);
-// >>>>>>> dacca64e26f26ff26c0cb7c2a66734d9b7588147
         }
 
         // sync sub-component

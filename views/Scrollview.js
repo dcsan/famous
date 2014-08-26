@@ -22,7 +22,10 @@ define(function(require, exports, module) {
     var GenericSync = require('famous/inputs/GenericSync');
     var ScrollSync = require('famous/inputs/ScrollSync');
     var TouchSync = require('famous/inputs/TouchSync');
-    GenericSync.register({scroll : ScrollSync, touch : TouchSync});
+    GenericSync.register({
+        scroll: ScrollSync,
+        touch: TouchSync
+    });
 
     /** @const */
     var TOLERANCE = 0.5;
@@ -36,8 +39,8 @@ define(function(require, exports, module) {
 
     /** @enum */
     var EdgeStates = {
-        TOP:   -1,
-        NONE:   0,
+        TOP: -1,
+        NONE: 0,
         BOTTOM: 1
     };
 
@@ -83,10 +86,9 @@ define(function(require, exports, module) {
         this._scroller = new Scroller(this.options);
 
         this.sync = new GenericSync(
-            ['scroll', 'touch'],
-            {
-                direction : this.options.direction,
-                scale : this.options.syncScale,
+            ['scroll', 'touch'], {
+                direction: this.options.direction,
+                scale: this.options.syncScale,
                 rails: this.options.rails
             }
         );
@@ -150,7 +152,7 @@ define(function(require, exports, module) {
         edgeGrip: 0.2,
         edgePeriod: 300,
         edgeDamp: 1,
-        margin: 1000,       // mostly safe
+        margin: 1000, // mostly safe
         paginated: false,
         pagePeriod: 500,
         pageDamp: 0.8,
@@ -182,8 +184,7 @@ define(function(require, exports, module) {
                     _handleEnd.call(this, event);
                     this._earlyEnd = true;
                 }
-            }
-            else if (this._earlyEnd && (Math.abs(velocity) > Math.abs(this.getVelocity()))) {
+            } else if (this._earlyEnd && (Math.abs(velocity) > Math.abs(this.getVelocity()))) {
                 _handleStart.call(this, event);
             }
         }
@@ -242,7 +243,9 @@ define(function(require, exports, module) {
         }.bind(this));
 
         this._scroller.on('offEdge', function() {
-            this.sync.setOptions({scale: this.options.syncScale});
+            this.sync.setOptions({
+                scale: this.options.syncScale
+            });
             this._onEdge = this._scroller.onEdge();
             this._eventOutput.emit('offEdge');
         }.bind(this));
@@ -275,7 +278,9 @@ define(function(require, exports, module) {
     }
 
     function _handleEdge(edge) {
-        this.sync.setOptions({scale: this.options.edgeGrip});
+        this.sync.setOptions({
+            scale: this.options.edgeGrip
+        });
         this._onEdge = edge;
 
         if (!this._touchCount && this._springState !== SpringStates.EDGE) {
@@ -311,11 +316,9 @@ define(function(require, exports, module) {
 
         if ((positionNext && !velocitySwitch) || (velocitySwitch && velocityNext)) {
             this.goToNextPage();
-        }
-        else if (velocitySwitch && velocityPrev) {
+        } else if (velocitySwitch && velocityPrev) {
             this.goToPreviousPage();
-        }
-        else _setSpring.call(this, 0, SpringStates.PAGE);
+        } else _setSpring.call(this, 0, SpringStates.PAGE);
     }
 
     function _setSpring(position, springState) {
@@ -327,8 +330,7 @@ define(function(require, exports, module) {
                 period: this.options.edgePeriod,
                 dampingRatio: this.options.edgeDamp
             };
-        }
-        else if (springState === SpringStates.PAGE) {
+        } else if (springState === SpringStates.PAGE) {
             this._pageSpringPosition = position;
             springOptions = {
                 anchor: [this._pageSpringPosition, 0, 0],
@@ -384,10 +386,13 @@ define(function(require, exports, module) {
         this._totalShift += amount;
 
         if (this._springState === SpringStates.EDGE) {
-            this.spring.setOptions({anchor: [this._edgeSpringPosition, 0, 0]});
-        }
-        else if (this._springState === SpringStates.PAGE) {
-            this.spring.setOptions({anchor: [this._pageSpringPosition, 0, 0]});
+            this.spring.setOptions({
+                anchor: [this._edgeSpringPosition, 0, 0]
+            });
+        } else if (this._springState === SpringStates.PAGE) {
+            this.spring.setOptions({
+                anchor: [this._pageSpringPosition, 0, 0]
+            });
         }
     }
 
@@ -576,8 +581,12 @@ define(function(require, exports, module) {
             this.unsubscribe(this._scroller);
 
         // physics sub-components
-        if (options.drag !== undefined) this.drag.setOptions({strength: options.drag});
-        if (options.friction !== undefined) this.friction.setOptions({strength: options.friction});
+        if (options.drag !== undefined) this.drag.setOptions({
+            strength: options.drag
+        });
+        if (options.friction !== undefined) this.friction.setOptions({
+            strength: options.friction
+        });
         if (options.edgePeriod !== undefined || options.edgeDamp !== undefined) {
             this.spring.setOptions({
                 period: options.edgePeriod,
@@ -605,7 +614,10 @@ define(function(require, exports, module) {
      * @param {Array|ViewSequence} node Either an array of renderables or a Famous viewSequence.
      */
     Scrollview.prototype.sequenceFrom = function sequenceFrom(node) {
-        if (node instanceof Array) node = new ViewSequence({array: node, trackSize: true});
+        if (node instanceof Array) node = new ViewSequence({
+            array: node,
+            trackSize: true
+        });
         this._node = node;
         return this._scroller.sequenceFrom(node);
     };
@@ -633,10 +645,16 @@ define(function(require, exports, module) {
 
         if (this._node) {
             if (this._cachedIndex < this._node.index) {
-                this._eventOutput.emit('pageChange', {direction: 1, index: this._node.index});
+                this._eventOutput.emit('pageChange', {
+                    direction: 1,
+                    index: this._node.index
+                });
                 this._cachedIndex = this._node.index;
             } else if (this._cachedIndex > this._node.index) {
-                this._eventOutput.emit('pageChange', {direction: -1, index: this._node.index});
+                this._eventOutput.emit('pageChange', {
+                    direction: -1,
+                    index: this._node.index
+                });
                 this._cachedIndex = this._node.index;
             }
         }
